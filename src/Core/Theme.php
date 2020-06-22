@@ -48,7 +48,7 @@ class Theme
 			$namespace_dir = get_template_directory() . '/src//' . $namespace;
 
 			foreach (scandir($namespace_dir, 1) as $file) {
-				if ($file == '.' || $file == '..') {
+				if (strpos($file, '.php') === false) {
 					continue;
 				}
 
