@@ -31,7 +31,7 @@ class WPTemplate extends TemplateEngine
 	public function renderObject(Renderable $renderable): string
 	{
 		ob_start();
-		$this->render($renderable->template, $renderable->state);
+		$this->render($renderable->template, $renderable->props);
 		return ob_get_clean();
 	}
 }

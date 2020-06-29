@@ -19,29 +19,22 @@ use SolidPress\Interfaces\Renderable;
 abstract class Page implements Renderable
 {
 	public $template;
-	public $state = [];
-	public $assets = [];
+	public $props = [];
 
-	public function __construct()
+	public function __construct($props = [])
 	{
-		DIE('HERE');
-		add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-	}
-
-	protected function enqueue_scripts() {
-		die('HWEW');
-		$css_path = "/assets/css/dist/{$this->template}.dist.css";
-		$js_path = "/assets/js/dist/{$this->template}.dist.js";
-		var_dump( $css_path);
-		wp_enqueue_style('tomatico-style', get_template_directory_uri() . $css_path, [], filemtime(get_template_directory($css_path)));
-		wp_enqueue_script('tomatico-scripts', get_template_directory_uri() . $js_path . '#defer', ['jquery'], filemtime(get_template_directory($js_path)), true);
+		$this->props = array_merge($this->get_props(), $props);
 	}
 
 	public function __toString(): string
 	{
 		global $theme_class;
-		$this->template = 'pages/'.$this->template;
 		return $theme_class->template_engine->renderObject($this);
+	}
+
+	public function get_props(): array
+	{
+		return [];
 	}
 
 	/**

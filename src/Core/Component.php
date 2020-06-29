@@ -7,17 +7,21 @@ use SolidPress\Interfaces\Renderable;
 abstract class Component implements Renderable
 {
 	public $template;
-	public $state = [];
-	public $assets = [];
+	public $props = [];
 
-	public function __construct($args = [])
+	public function __construct($props = [])
 	{
-		$this->state = array_merge($this->state, $args);
+		$this->props = array_merge($this->get_props(), $props);
 	}
 
 	public function __toString(): string
 	{
 		global $theme_class;
 		return $theme_class->template_engine->renderObject($this);
+	}
+
+	public function get_props(): array
+	{
+		return [];
 	}
 }
