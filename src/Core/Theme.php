@@ -15,6 +15,7 @@ class Theme
 	{
 		$this->template_engine = $template_engine;
 		$this->load_registrable_classes();
+		new TemplateEnqueues();
 	}
 
 	/**
@@ -45,7 +46,7 @@ class Theme
 		];
 
 		foreach ($namespaces as $namespace) {
-			$namespace_dir = get_template_directory() . '/src//' . $namespace;
+			$namespace_dir = get_template_directory() . '/logic//' . $namespace;
 
 			foreach (scandir($namespace_dir, 1) as $file) {
 				if (strpos($file, '.php') === false) {
