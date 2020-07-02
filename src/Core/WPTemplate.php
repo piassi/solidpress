@@ -18,7 +18,13 @@ class WPTemplate extends TemplateEngine
 			extract($params);
 		}
 
-		include(locate_template($this->get_template_path($template), false, false));
+		$template_file = locate_template($this->get_template_path($template), false, false);
+
+		if(!$template_file){
+			throw new \Error("Template '{$template}' not found!");
+		}
+
+		include($template_file);
 	}
 
 	public function renderToString(string $template, array $params = []): string
