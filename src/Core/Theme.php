@@ -2,32 +2,42 @@
 
 namespace SolidPress\Core;
 
+use Error;
+
 class Theme
 {
 	/**
 	 * Template engine
 	 *
-	 * @var TemplateEngine
+	 * @param array $args [
+	 * 	'template_engine' => @param TemplateEngine
+	 * 	'namespace' => @param string
+	 * 	'base_folder' => @param string
+	 * 	'registrable_namespaces' => @param string
+	 * ]
 	 */
 	public $template_engine;
+	public $namespace;
+	public $base_folder;
+	public $registrable_namespaces;
 
-	public function __construct(TemplateEngine $template_engine)
+	public function __construct(array $args)
 	{
-		$this->template_engine = $template_engine;
+		if(
+			!$args['template_engine'] ||
+			!($args['template_engine'] instanceof TemplateEngine)
+		){
+			throw new Error('Template engine not provided');
+		}
+
+		$this->template_engine = $args['template_engine'];
+		$this->namespace = $args['namespace'];
+		$this->base_folder = $args['base_folder'];
+		$this->registrable_namespaces = $args['registrable_namespaces'];
+
 		$this->load_registrable_classes();
-		new TemplateEnqueues();
-	}
 
-	/**
-	 * Create new theme with WPTemplate template engine.
-	 *
-	 * @return Theme
-	 */
-	public static function create_wp_theme(): Theme
-	{
-		return new Theme(
-			new WPTemplate()
-		);
+		new TemplateEnqueues();
 	}
 
 	/**
@@ -38,16 +48,8 @@ class Theme
 	 */
 	protected function load_registrable_classes(): void
 	{
-		$namespaces = [
-			'FieldsGroups',
-			'Options',
-			'Taxonomies',
-			'PostTypes',
-			'Hooks',
-		];
-
-		foreach ($namespaces as $namespace) {
-			$namespace_dir = get_template_directory() . '/logic//' . $namespace;
+		foreach ($this->registrable_namespaces as $namespace) {
+			$namespace_dir = get_template_directory() . "/{$this->base_folder}//" . $namespace;
 
 			foreach (scandir($namespace_dir, 1) as $file) {
 				if (strpos($file, '.php') === false) {
@@ -56,7 +58,7 @@ class Theme
 
 				$class_name_array = explode('.php', $file);
 				$class_name = array_shift($class_name_array);
-				$class_namespaced = 'Site\\' . $namespace . '\\' . $class_name;
+				$class_namespaced = $this->namespace . '\\' . $namespace . '\\' . $class_name;
 				$class_instance = new $class_namespaced();
 				$class_instance->register();
 			}
