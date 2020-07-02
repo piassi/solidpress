@@ -16,8 +16,12 @@ abstract class Component implements Renderable
 
 	public function __toString(): string
 	{
-		global $theme_class;
-		return $theme_class->template_engine->renderObject($this);
+		try {
+			global $theme_class;
+			return $theme_class->template_engine->renderObject($this);
+		} catch (\Throwable $e) {
+			return $e->getMessage();
+		}
 	}
 
 	public function get_props(): array
