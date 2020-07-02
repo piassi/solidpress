@@ -43,6 +43,7 @@ class Theme
 			'Options',
 			'Taxonomies',
 			'PostTypes',
+			'Hooks',
 		];
 
 		foreach ($namespaces as $namespace) {
