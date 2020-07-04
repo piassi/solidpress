@@ -1,6 +1,7 @@
 <?php
-  namespace SolidPress\Fields;
-  
-	use SolidPress\Core\Field;
-  
-  class Layout extends Field {}
+namespace SolidPress\Fields;
+
+use SolidPress\Core\Field;
+
+class Layout extends Field {
+}

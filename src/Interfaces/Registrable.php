@@ -2,7 +2,6 @@
 
 namespace SolidPress\Interfaces;
 
-interface Registrable
-{
+interface Registrable {
 	public function register(): void;
 }

@@ -7,8 +7,7 @@ use SolidPress\Interfaces\Registrable;
 /**
  * Creates a new interface to wordpress taxonomies.
  */
-abstract class Taxonomy implements Registrable
-{
+abstract class Taxonomy implements Registrable {
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
 	 *
@@ -43,8 +42,7 @@ abstract class Taxonomy implements Registrable
 	 *
 	 * @return void
 	 */
-	public function register(): void
-	{
+	public function register(): void {
 		if (!$this->taxonomy) {
 			throw new \Error("Property 'taxonomy' is not defined.");
 		}
@@ -66,8 +64,7 @@ abstract class Taxonomy implements Registrable
 	 * @param string $taxonomy - string containing the taxonomy.
 	 * @return array conditional array
 	 */
-	public static function isEqualTo(string $taxonomy): array
-	{
+	public static function is_equal_to(string $taxonomy): array {
 		return [
 			'param' => 'taxonomy',
 			'operator' => '==',

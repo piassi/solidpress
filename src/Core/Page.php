@@ -16,28 +16,24 @@ use SolidPress\Interfaces\Renderable;
  * echo new Site\Pages\SamplePage();
  *
  */
-abstract class Page implements Renderable
-{
+abstract class Page implements Renderable {
 	public $template;
 	public $props = [];
 
-	public function __construct($props = [])
-	{
+	public function __construct($props = []) {
 		$this->props = array_merge($this->get_props(), $props);
 	}
 
-	public function __toString(): string
-	{
+	public function __toString(): string {
 		try {
 			global $theme_class;
-			return $theme_class->template_engine->renderObject($this);
+			return $theme_class->template_engine->render_object($this);
 		} catch (\Throwable $e) {
 			return $e->getMessage();
 		}
 	}
 
-	public function get_props(): array
-	{
+	public function get_props(): array {
 		return [];
 	}
 
@@ -47,12 +43,11 @@ abstract class Page implements Renderable
 	 * @param string $template_name - string containing the template name without file extension.
 	 * @return array conditional array
 	 */
-	public static function templateIsEqualTo(string $template_name): array
-	{
+	public static function template_is_equal_to(string $template_name): array {
 		return [
 			'param' => 'page_template',
 			'operator' => '==',
-			'value' =>  $template_name . '.php',
+			'value' => $template_name . '.php',
 		];
 	}
 
@@ -62,12 +57,11 @@ abstract class Page implements Renderable
 	 * @param int $page_id - integer containing the page id.
 	 * @return array conditional array
 	 */
-	public static function isEqualTo(int $page_id): array
-	{
+	public static function is_equal_to(int $page_id): array {
 		return [
 			'param' => 'page',
 			'operator' => '==',
-			'value' =>  $page_id,
+			'value' => $page_id,
 		];
 	}
 
@@ -78,12 +72,11 @@ abstract class Page implements Renderable
 	 * accepeted values are: front_page | posts_page | top_level | parent | child
 	 * @return array conditional array
 	 */
-	public static function typeIsEqualTo(string $page_type): array
-	{
+	public static function type_is_equal_to(string $page_type): array {
 		return [
 			'param' => 'page_type',
 			'operator' => '==',
-			'value' =>  $page_type,
+			'value' => $page_type,
 		];
 	}
 
@@ -93,12 +86,11 @@ abstract class Page implements Renderable
 	 * @param int $parent_id - integer containing the page parent id.
 	 * @return array conditional array
 	 */
-	public static function parentIsEqualTo(int $parent_id): array
-	{
+	public static function parent_is_equal_to(int $parent_id): array {
 		return [
 			'param' => 'page_parent',
 			'operator' => '==',
-			'value' =>  $parent_id,
+			'value' => $parent_id,
 		];
 	}
 }

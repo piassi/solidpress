@@ -7,8 +7,7 @@ use SolidPress\Interfaces\Registrable;
 /**
  * Creates a new interface to wordpress custom post types.
  */
-abstract class PostType implements Registrable
-{
+abstract class PostType implements Registrable {
 	/**
 	 * Post type key. Must not exceed 20 characters and may only contain
 	 * lowercase alphanumeric characters, dashes, and underscores.
@@ -35,8 +34,7 @@ abstract class PostType implements Registrable
 	 *
 	 * @return void
 	 */
-	public function register(): void
-	{
+	public function register(): void {
 		if (!$this->post_type) {
 			throw new \Error("Property 'post_type' is not defined.");
 		}
@@ -54,8 +52,7 @@ abstract class PostType implements Registrable
 	 * @param string $post_type - string containing the post type.
 	 * @return array conditional array
 	 */
-	public static function isEqualTo(string $post_type): array
-	{
+	public static function is_equal_to(string $post_type): array {
 		return [
 			'param' => 'post_type',
 			'operator' => '==',

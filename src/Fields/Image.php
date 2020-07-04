@@ -1,8 +1,8 @@
 <?php
-	namespace SolidPress\Fields;
+namespace SolidPress\Fields;
 
-	use SolidPress\Core\Field;
-	
-  class Image extends Field {
-		public $defaults = ['type' => 'image'];
-  }
+use SolidPress\Core\Field;
+
+class Image extends Field {
+	public $defaults = ['type' => 'image'];
+}

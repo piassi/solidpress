@@ -9,8 +9,7 @@ use SolidPress\Interfaces\Registrable;
  *
  * This class must be extended and files must be in /Site/Options directory.
  */
-abstract class OptionsPage implements Registrable
-{
+abstract class OptionsPage implements Registrable {
 	/**
 	 * ACF acf_add_options_page args
 	 *
@@ -27,8 +26,7 @@ abstract class OptionsPage implements Registrable
 	 *
 	 * @return void
 	 */
-	public function register(): void
-	{
+	public function register(): void {
 		acf_add_options_page($this->args);
 	}
 
@@ -38,8 +36,7 @@ abstract class OptionsPage implements Registrable
 	 * @param string $options_page - string containing the options_page.
 	 * @return array conditional array
 	 */
-	public static function isEqualTo(string $options_page): array
-	{
+	public static function is_equal_to(string $options_page): array {
 		return [
 			'param' => 'options_page',
 			'operator' => '==',

@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			// Main theme folder
+			"name": "solidpress",
+			"path": "."
+		}
+	],
+	"extensions": {
+		"recommendations": [
+			// Share etiding configurations like identation, end of line, charset and more
+			"editorconfig.editorconfig",
+			// PHP language helper (you need to disable default PHP Language Features from VSCode)
+			"bmewburn.vscode-intelephense-client",
+			// Code Formatter
+			"esbenp.prettier-vscode"
+		]
+	},
+	"settings": {
+		// Enable formating when saving files
+		"editor.formatOnSave": true,
+		// Change default code formatter to Prettier
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		// Disable autoformat from Intelephense extension
+		"intelephense.format.enable": false
+	}
+}

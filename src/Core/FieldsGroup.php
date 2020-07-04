@@ -7,8 +7,7 @@ use SolidPress\Interfaces\Registrable;
 /**
  * Creates a new interface to ACF Field Groups
  */
-abstract class FieldsGroup implements Registrable
-{
+abstract class FieldsGroup implements Registrable {
 	/**
 	 * Field group register arguments
 	 *
@@ -23,10 +22,12 @@ abstract class FieldsGroup implements Registrable
 	 *
 	 * @return void
 	 */
-	public function register(): void
-	{
+	public function register(): void {
 		$args = $this->args;
-		$args['fields'] = Field::get_fields_args($this->args['fields'], $this->args['key']);
+		$args['fields'] = Field::get_fields_args(
+			$this->args['fields'],
+			$this->args['key']
+		);
 
 		acf_add_local_field_group($args);
 	}
