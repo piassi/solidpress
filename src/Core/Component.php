@@ -9,7 +9,12 @@ abstract class Component implements Renderable {
 	public $props = [];
 
 	public function __construct($props = []) {
-		$this->props = array_merge($this->get_props(), $props);
+		$this->props = array_merge($this->props, $props);
+
+		$dynamic_props = $this->get_props();
+		if($dynamic_props){
+			$this->props = array_merge($this->props, $dynamic_props);
+		}
 	}
 
 	public function __toString(): string {
