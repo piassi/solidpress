@@ -15,14 +15,13 @@ class Button extends Field {
 		'layout' => 'table',
 	];
 
-	public function __construct($args) {
-		parent::__construct($args);
+	public function __construct($label, $args = []) {
+		parent::__construct($label, $args);
 
 		$this->args['sub_fields'] = [
-			'label' => new Text('Label'),
+			'content' => new Text('Conteúdo'),
 			'url' => new URL('URL'),
 			'new_window' => new Boolean('Open in new window?'),
-			'scroll' => new Boolean('Scroll'),
 		];
 	}
 }
