@@ -17,17 +17,17 @@ class TemplateEnqueues {
 		global $theme_class;
 
 		// Theme scripts & styles
-		$css_path = "{$theme_class->js_dist_path}/{$template_name}.dist.css";
+		$css_path = "{$theme_class->css_dist_path}/{$template_name}.dist.css";
 		$js_path = "{$theme_class->js_dist_path}/{$template_name}.dist.js";
 		wp_enqueue_style(
 			"{$theme_class->theme_name}-style",
-			get_template_directory_uri() . $css_path,
+			$css_path,
 			[],
 			filemtime(get_template_directory($css_path))
 		);
 		wp_enqueue_script(
 			"{$theme_class->theme_name}-scripts",
-			get_template_directory_uri() . $js_path . '#defer',
+			$js_path . '#defer',
 			['jquery'],
 			filemtime(get_template_directory($js_path)),
 			true
