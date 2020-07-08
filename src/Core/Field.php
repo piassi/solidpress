@@ -77,4 +77,9 @@ abstract class Field {
 
 		return $fields_args;
 	}
+
+	public function get_value(string $field_key, array $parent)
+	{
+		return get_field($field_key);
+	}
 }
