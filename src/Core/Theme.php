@@ -3,6 +3,7 @@
 namespace SolidPress\Core;
 
 use Error;
+use SolidPress\Hooks;
 
 class Theme {
 	/**
@@ -44,7 +45,8 @@ class Theme {
 
 		$this->load_registrable_classes();
 
-		new TemplateEnqueues();
+		new Hooks\TemplateEnqueues();
+		new Hooks\ACF();
 	}
 
 	/**
