@@ -1,6 +1,6 @@
 <?php
 
-namespace SolidPress\Core;
+namespace SolidPress\Hooks;
 
 class TemplateEnqueues {
 	public function __construct() {
