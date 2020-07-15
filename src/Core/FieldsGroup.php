@@ -39,12 +39,16 @@ abstract class FieldsGroup implements Registrable {
 		$this->fields = $fields;
 	}
 
-	public function get_fields_values(): array
+	public static function get_values(FieldsGroup $fields_group, array $fields_to_get = []): array
 	{
+		if(!$fields_to_get){
+			$fields_to_get = array_keys($fields_group->fields);
+		}
+
 		$fields_values = [];
 
-		foreach($this->fields as $field_key => $field){
-			$fields_values[$field_key] = $field->get_value($field_key, $this->args) ?? [];
+		foreach($fields_group->fields as $field_key => $field){
+			$fields_values[$field_key] = $field->get_value($field_key, $fields_group->args) ?? [];
 		}
 
 		return $fields_values;
