@@ -17,8 +17,9 @@ class TemplateEnqueues {
 		global $theme_class;
 
 		// Theme scripts & styles
-		$css_path = "{$theme_class->css_dist_path}/{$template_name}.dist.css";
-		$js_path = "{$theme_class->js_dist_path}/{$template_name}.dist.js";
+		$css_path = sprintf($theme_class->css_dist_path, $template_name);
+		$js_path = sprintf($theme_class->js_dist_path, $template_name);
+
 		wp_enqueue_style(
 			"{$theme_class->theme_name}-style",
 			$css_path,
