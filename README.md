@@ -4,7 +4,8 @@ A library that uses the best OOP practices to provide a solid project structure 
 
 -   [Installation](#installation)
 -   [Setup](#setup)
--   [Handbook](#handbook) \* [Registering a new post type](#registering-a-new-post-type)
+-   [Handbook](#handbook)
+    -   [Registering a new post type](#registering-a-new-post-type)
 
 ## Installation
 
