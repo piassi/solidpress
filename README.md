@@ -77,7 +77,7 @@ The _PostType_, _Taxonomy_, and _FieldGroup_ classes extend the Registrable inte
 
 ### Registering a new post type
 
-In order to register a new post type you must create a new class inside the _PostTypes_ namespace, and set _post_type_ and _args_ properties inside the constructor method, those properties will be forwarded to _register_post_type_ function.
+To register a new post type you must create a new class inside the _PostTypes_ namespace, and set _post_type_ and _args_ properties inside the constructor method, those properties will be forwarded to _register_post_type_ function.
 
 > See _register_post_type_ [docs](https://developer.wordpress.org/reference/functions/register_post_type/) to see more details about the _args_ property.
 
@@ -86,7 +86,7 @@ In order to register a new post type you must create a new class inside the _Pos
 Registering a new post type called "Products"
 
 ```php
-// Filepath: src/PostTypes/Prodcuts.php
+// Filepath: src/PostTypes/Products.php
 
 namespace App\PostTypes;
 
@@ -95,10 +95,10 @@ use SolidPress\Core\PostType;
 class Products extends PostType{
 	public function __construct()
 	{
-		$this->post_type = "products";
+		$this->post_type = "product";
 
 		$labels = [
-			"name" => "Prodcuts",
+			"name" => "Products",
 			"singular_name" => "Product",
 			"menu_name" => "Products",
 			"all_items" => "All Products",
@@ -135,6 +135,61 @@ class Products extends PostType{
 			"supports"            => array("title", "editor", "revisions", "excerpt"),
 			"menu_icon"           => 'dashicons-book-alt',
 			"taxonomies"          => []
+		];
+	}
+}
+
+```
+
+### Creating a new custom fields group
+
+Create a new class inside the _FieldsGroup_ namespace, call _set_fields_ and set _args_ inside the class constructor.
+
+The _set_fields_ method receives has an array as an argument, the array key is the field name, and the value is a _Field_ class instance.
+
+**Example**
+
+Creating a new fields group to _product_ post type.
+
+```php
+// Filepath: src/FieldsGroup/Product.php
+
+namespace App\FieldsGroup;
+
+use SolidPress\Core\FieldGroup;
+use SolidPress\Core\PostType;
+use SolidPress\Fields;
+
+class Product extends FieldGroup{
+	public function __construct() {
+		// Set fields
+		$this->set_fields([
+			'product_detailts_tab' => new Fields\Tab('Product Details'),
+			'value' => new Fields\Number('Value'),
+			'subtitle' => new Fields\Text('Subtitle', [
+				// You can pass an acf options array as the second argument
+				'wrapper' => [
+					'width' => 70
+				]
+			]),
+			'gallery_thumbnail' => new Fields\Image('Gallery Thumbnail', [
+				'wrapper' => [
+					'width' => 30
+				]
+			])
+		]);
+
+		// Set arguments
+		$this->args = [
+			'key' => 'product-fields',
+			'title' => 'Product Fields',
+			'location' => [
+				[
+					// Pages, Taxonomies, OptionsPages, and PostTypes
+					// classes have static methods for acf conditionals.
+					PostType::is_equal_to('product'),
+				],
+			]
 		];
 	}
 }
