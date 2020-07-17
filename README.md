@@ -6,6 +6,7 @@ A library that uses the best OOP practices to provide a solid project structure 
 -   [Setup](#setup)
 -   [Handbook](#handbook)
     -   [Registering a new post type](#registering-a-new-post-type)
+    -   [Creating a new custom fields group](#creating-a-new-custom-fields-group)
 
 ## Installation
 
@@ -42,7 +43,7 @@ $registrable_namespaces = [];
 
 // Check if ACF plugin is active to register fields
 if (function_exists('acf_add_local_field_group')) {
-	$registrable_namespaces[] = 'FieldsGroups';
+	$registrable_namespaces[] = 'FieldsGroup';
 	$registrable_namespaces[] = 'Options';
 }
 
@@ -66,19 +67,19 @@ $theme_class = new Theme([
 ]);
 ```
 
-You can check [this theme](https://github.com/piassi/solidpress-theme) as a reference.
+> You can check [this theme](https://github.com/piassi/solidpress-theme) as a reference.
 
 ## Handbook
 
 ### Registrables
 
-Post Types, Taxonomies, and FieldsGroups extend the Registrable interface, those classes must have a constructor method that will be automatically called at site startup.
+The _PostType_, _Taxonomy_, and _FieldGroup_ classes extend the Registrable interface, those classes must have a constructor method that will be automatically called at site startup.
 
 ### Registering a new post type
 
-In order to register a new PostType you must create a new class inside the "PostTypes" namespace, and set "post_type" and "args" properties inside the constructor method, those properties will be forwarded to "register_post_type" function.
+In order to register a new post type you must create a new class inside the _PostTypes_ namespace, and set _post_type_ and _args_ properties inside the constructor method, those properties will be forwarded to _register_post_type_ function.
 
-See register_post_type [docs](https://developer.wordpress.org/reference/functions/register_post_type/) to see more details about the "args" propertie.
+> See _register_post_type_ [docs](https://developer.wordpress.org/reference/functions/register_post_type/) to see more details about the _args_ property.
 
 **Example**
 
