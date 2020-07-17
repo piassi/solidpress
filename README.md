@@ -77,7 +77,9 @@ The _PostType_, _Taxonomy_, and _FieldGroup_ classes extend the Registrable inte
 
 ### Registering a new post type
 
-To register a new post type you must create a new class inside the _PostTypes_ namespace, and set _post_type_ and _args_ properties inside the constructor method, those properties will be forwarded to _register_post_type_ function.
+1. Create a new class inside the _PostTypes_ namespace.
+
+2. Set _post_type_ and _args_ properties inside the constructor method, those properties will be forwarded to _register_post_type_ function.
 
 > See _register_post_type_ [docs](https://developer.wordpress.org/reference/functions/register_post_type/) to see more details about the _args_ property.
 
@@ -143,9 +145,9 @@ class Products extends PostType{
 
 ### Creating a new custom fields group
 
-Create a new class inside the _FieldsGroup_ namespace, call _set_fields_ and set _args_ inside the class constructor.
+1. Create a new class inside the _FieldsGroup_ namespace, call _set_fields_ and set _args_ inside the class constructor.
 
-The _set_fields_ method receives has an array as an argument, the array key is the field name, and the value is a _Field_ class instance.
+2. The _set_fields_ method receives has an array as an argument, the array key is the field name, and the value is a _Field_ class instance.
 
 **Example**
 
