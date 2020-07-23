@@ -13,7 +13,9 @@
 			// PHP language helper (you need to disable default PHP Language Features from VSCode)
 			"bmewburn.vscode-intelephense-client",
 			// Code Formatter
-			"esbenp.prettier-vscode"
+			"esbenp.prettier-vscode",
+			// Extension to run phpcbf onSave
+			"emeraldwalk.runonsave"
 		]
 	},
 	"settings": {
@@ -22,6 +24,17 @@
 		// Change default code formatter to Prettier
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		// Disable autoformat from Intelephense extension
-		"intelephense.format.enable": false
+		"intelephense.format.enable": true,
+		"intelephense.format.braces": "k&r",
+		"phpcs.showSources": true,
+		// Run phpcbf onSave for .php files
+		"emeraldwalk.runonsave": {
+			"commands": [
+				{
+					"match": "\\.php$",
+					"cmd": "./vendor/bin/phpcbf ${file}"
+				}
+			]
+		}
 	}
 }
