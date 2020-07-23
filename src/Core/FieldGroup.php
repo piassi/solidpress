@@ -13,8 +13,14 @@ abstract class FieldGroup implements Registrable {
 	 *
 	 * @var array
 	 */
-	protected $args = [];
-	protected $fields = [];
+	protected $args = array();
+
+	/**
+	 * Undocumented variable
+	 *
+	 * @var Field[] - Field objects array
+	 */
+	protected $fields = array();
 
 
 	/**
@@ -25,30 +31,28 @@ abstract class FieldGroup implements Registrable {
 	 * @return void
 	 */
 	public function register(): void {
-		$args = $this->args;
+		$args           = $this->args;
 		$args['fields'] = Field::get_fields_args(
 			$this->fields,
 			$this->args['key']
 		);
 
-		acf_add_local_field_group($args);
+		acf_add_local_field_group( $args );
 	}
 
-	public function set_fields(array $fields): void
-	{
+	public function set_fields( array $fields ): void {
 		$this->fields = $fields;
 	}
 
-	public static function get_values(FieldGroup $fields_group, array $fields_to_get = []): array
-	{
-		if(!$fields_to_get){
-			$fields_to_get = array_keys($fields_group->fields);
+	public static function get_values( FieldGroup $fields_group, array $fields_to_get = array() ): array {
+		if ( ! $fields_to_get ) {
+			$fields_to_get = array_keys( $fields_group->fields );
 		}
 
-		$fields_values = [];
+		$fields_values = array();
 
-		foreach($fields_group->fields as $field_key => $field){
-			$fields_values[$field_key] = $field->get_value($field_key, $fields_group->args) ?? [];
+		foreach ( $fields_group->fields as $field_key => $field ) {
+			$fields_values[ $field_key ] = $field->get_value( $field_key, $fields_group->args ) ?? array();
 		}
 
 		return $fields_values;

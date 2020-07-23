@@ -2,12 +2,15 @@
 
 namespace SolidPress\Hooks;
 
-class TemplateEnqueues {
-	public function __construct() {
+class TemplateEnqueues
+{
+	public function __construct()
+	{
 		add_action('wp_enqueue_scripts', [$this, 'enqueue_template_scripts']);
 	}
 
-	public function enqueue_template_scripts(): void {
+	public function enqueue_template_scripts(): void
+	{
 		$template_name = $this->get_template_name();
 
 		if (!$template_name) {
@@ -35,13 +38,14 @@ class TemplateEnqueues {
 		);
 	}
 
-	public static function get_template_name(): string {
+	public static function get_template_name(): string
+	{
 		if (is_front_page() || is_home()) {
 			// Home
 			$template_name = 'home';
 		} elseif (is_single()) {
 			// Article
-			$template_name = 'article';
+			$template_name = get_post_type() == 'post' ? 'article' : get_post_type();
 		} elseif (is_category()) {
 			// Category
 			$template_name = 'category';
