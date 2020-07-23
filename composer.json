@@ -14,5 +14,9 @@
 		"psr-4": {
 			"SolidPress\\": "src/"
 		}
+	},
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^2.3",
+		"paulthewalton/acf-stubs": "^5.8"
 	}
 }
