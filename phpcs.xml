@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Theme Boilerplate" namespace="WordPress\Theme\Boilerplate">
+	<!-- Provide installation path to the WordPress Coding Standards. -->
+	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs" />
+
+	<!-- Check only files with .php extension. -->
+	<arg name="extensions" value="php" />
+
+	<!-- Exclude from checking package managers directiories. -->
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<!-- Disallow using a short array syntax.-->
+	<rule ref="Generic.Arrays.DisallowShortArraySyntax.Found">
+		<type>warning</type>
+	</rule>
+
+	<!-- Extend WordPress Coding Standard ruleset. -->
+	<rule ref="WordPress-Extra" />
+
+	<!-- Check for usage of deprecated functions. -->
+	<rule ref="WordPress.WP.DeprecatedFunctions">
+		<properties>
+			<property name="minimum_supported_version" value="4.0" />
+		</properties>
+	</rule>
+
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.Security.EscapeOutput.OutputNotEscaped" />
+		<exclude name="Generic.Files.EndFileNewline.NotFound" />
+		<exclude name="Squiz.Commenting.FileComment.Missing" />
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent.SpacesUsed" />
+	</rule>
+</ruleset>
