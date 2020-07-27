@@ -6,19 +6,6 @@ use Error;
 use SolidPress\Hooks;
 
 class Theme {
-	/**
-	 * Template engine
-	 *
-	 * @param array $args [
-	 * 	'template_engine' => @param TemplateEngine
-	 * 	'namespace' => @param string
-	 * 	'base_folder' => @param string
-	 * 	'registrable_namespaces' => @param string
-	 * 	'theme_name' => @param string
-	 * 	'js_dist_path' => @param string
-	 * 	'css_dist_path' => @param string
-	 * ]
-	 */
 	public $template_engine;
 	public $namespace;
 	public $base_folder;
@@ -26,6 +13,17 @@ class Theme {
 	public $theme_name;
 	public $js_dist_path;
 	public $css_dist_path;
+
+	/**
+	 * Template engine
+	 *
+	 * @param array $args [
+	 * 	'template_engine' 			=> @param TemplateEngine
+	 * 	'namespace' 				=> @param string
+	 * 	'base_folder' 				=> @param string
+	 * 	'registrable_namespaces' 	=> @param string
+	 * ]
+	 */
 
 	public function __construct(array $args) {
 		if (
@@ -39,14 +37,8 @@ class Theme {
 		$this->namespace = $args['namespace'];
 		$this->base_folder = $args['base_folder'];
 		$this->registrable_namespaces = $args['registrable_namespaces'];
-		$this->theme_name = $args['theme_name'];
-		$this->js_dist_path = $args['js_dist_path'];
-		$this->css_dist_path = $args['css_dist_path'];
 
 		$this->load_registrable_classes();
-
-		new Hooks\TemplateEnqueues();
-		new Hooks\ACF();
 	}
 
 	/**
