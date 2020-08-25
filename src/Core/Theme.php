@@ -3,9 +3,9 @@
 namespace SolidPress\Core;
 
 use Error;
-use SolidPress\Hooks;
 
-class Theme {
+class Theme
+{
 	public $template_engine;
 	public $namespace;
 	public $base_folder;
@@ -25,7 +25,8 @@ class Theme {
 	 * ]
 	 */
 
-	public function __construct(array $args) {
+	public function __construct(array $args)
+	{
 		if (
 			!$args['template_engine'] ||
 			!($args['template_engine'] instanceof TemplateEngine)
@@ -47,12 +48,17 @@ class Theme {
 	 *
 	 * @return void
 	 */
-	protected function load_registrable_classes(): void {
+	protected function load_registrable_classes(): void
+	{
 		foreach ($this->registrable_namespaces as $namespace) {
-			$namespace_dir =
-				get_template_directory() .
-				"/{$this->base_folder}//" .
-				$namespace;
+			$namespace_dir = implode(
+				DIRECTORY_SEPARATOR,
+				array(
+					get_template_directory(),
+					$this->base_folder,
+					$namespace
+				)
+			);
 
 			foreach (scandir($namespace_dir, 1) as $file) {
 				if (strpos($file, '.php') === false) {
