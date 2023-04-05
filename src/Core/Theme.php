@@ -51,7 +51,7 @@ class Theme {
 	 * ]
 	 */
 
-	public function __construct( array $args ) {
+	public function init( array $args ) {
 		if (
 			! $args['template_engine'] ||
 			! ( $args['template_engine'] instanceof TemplateEngine )
@@ -65,8 +65,6 @@ class Theme {
 		$this->registrable_namespaces = $args['registrable_namespaces'];
 
 		$this->load_registrable_classes();
-
-		self::$instance = $this;
 	}
 
 	/**
@@ -74,9 +72,14 @@ class Theme {
 	 *
 	 * @return Theme
 	 */
-	public static function get_instance(): Theme {
-		return self::$instance;
-	}
+	public static function get_instance(): Theme
+    {
+        if (!isset(self::$instance)) {
+            self::$instance = new static();
+        }
+
+        return self::$instance;
+    }
 
 	/**
 	 * Search in folders for classes that implements Registrable interface,
