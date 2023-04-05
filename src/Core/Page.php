@@ -30,8 +30,7 @@ abstract class Page implements Renderable {
 
 	public function __toString(): string {
 		try {
-			$theme = Theme::get_instance();
-			return $theme->template_engine->render_object( $this );
+			return Theme::get_instance()->template_engine->render_object( $this );
 		} catch ( \Throwable $e ) {
 			return $e->getMessage();
 		}
