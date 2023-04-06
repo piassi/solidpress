@@ -20,6 +20,7 @@ abstract class Page implements Renderable {
 	public $props = [];
 	public $has_js_assets = false;
 	public $has_css_assets = false;
+	public $layout = null;
 
 	public function __construct( $props = [] ) {
 		$this->props = array_merge( $this->props, $props );
