@@ -47,6 +47,12 @@ class Theme {
 	protected static Page $current_page;
 
 	/**
+	 * Default layout instance
+	 * @var Page
+	 */
+	protected static string $default_layout;
+
+	/**
 	 * Template engine
 	 *
 	 * @param array $args [
@@ -86,16 +92,28 @@ class Theme {
 		return self::$instance;
 	}
 
-	public static function set_current_page( Page $page ): void {
+	public function set_current_page( Page $page ): void {
 		self::$current_page = $page;
 	}
 
-	public static function get_current_page(): Page {
+	public function get_current_page(): Page {
 		if ( self::$current_page === null ) {
 			throw new Error( 'Current page not set.' );
 		}
 
 		return self::$current_page;
+	}
+
+	public function set_default_layout( string $page ): void {
+		self::$default_layout = $page;
+	}
+
+	public function get_default_layout(): string {
+		if ( self::$default_layout === null ) {
+			throw new Error( 'Default layout not set.' );
+		}
+
+		return self::$default_layout;
 	}
 
 	/**
