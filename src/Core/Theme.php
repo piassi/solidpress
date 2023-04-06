@@ -41,6 +41,12 @@ class Theme {
 	protected static Theme $instance;
 
 	/**
+	 * Current page instance
+	 * @var Page
+	 */
+	protected static Page $current_page;
+
+	/**
 	 * Template engine
 	 *
 	 * @param array $args [
@@ -59,9 +65,9 @@ class Theme {
 			throw new Error( 'Template engine not provided' );
 		}
 
-		$this->template_engine        = $args['template_engine'];
-		$this->namespace              = $args['namespace'];
-		$this->base_folder            = $args['base_folder'];
+		$this->template_engine = $args['template_engine'];
+		$this->namespace = $args['namespace'];
+		$this->base_folder = $args['base_folder'];
 		$this->registrable_namespaces = $args['registrable_namespaces'];
 
 		$this->load_registrable_classes();
@@ -72,14 +78,25 @@ class Theme {
 	 *
 	 * @return Theme
 	 */
-	public static function get_instance(): Theme
-    {
-        if (!isset(self::$instance)) {
-            self::$instance = new static();
-        }
+	public static function get_instance(): Theme {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new static();
+		}
 
-        return self::$instance;
-    }
+		return self::$instance;
+	}
+
+	public static function set_current_page( Page $page ): void {
+		self::$current_page = $page;
+	}
+
+	public static function get_current_page(): Page {
+		if ( self::$current_page === null ) {
+			throw new Error( 'Current page not set.' );
+		}
+
+		return self::$current_page;
+	}
 
 	/**
 	 * Search in folders for classes that implements Registrable interface,
@@ -104,10 +121,10 @@ class Theme {
 				}
 
 				$class_name_array = explode( '.php', $file );
-				$class_name       = array_shift( $class_name_array );
+				$class_name = array_shift( $class_name_array );
 				$class_namespaced =
 					$this->namespace . '\\' . $namespace . '\\' . $class_name;
-				$class_instance   = new $class_namespaced();
+				$class_instance = new $class_namespaced();
 				$class_instance->register();
 			}
 		}
