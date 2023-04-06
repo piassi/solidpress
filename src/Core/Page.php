@@ -17,9 +17,12 @@ use SolidPress\Interfaces\Renderable;
  */
 abstract class Page implements Renderable {
 	public $template;
-	public $props = array();
+	public $props = [];
+	public $has_js_assets = false;
+	public $has_css_assets = false;
+	public $layout = null;
 
-	public function __construct( $props = array() ) {
+	public function __construct( $props = [] ) {
 		$this->props = array_merge( $this->props, $props );
 
 		$dynamic_props = $this->get_props();
@@ -30,15 +33,28 @@ abstract class Page implements Renderable {
 
 	public function __toString(): string {
 		try {
-			$theme = Theme::get_instance();
-			return $theme->template_engine->render_object( $this );
-		} catch ( \Throwable $e ) {
+			ob_start();
+			if ( $this->template ) {
+				return Theme::get_instance()->template_engine->render_object( $this );
+			}
+
+			$this->template( array_merge( $this->props, $this->get_props() ) );
+			return ob_get_clean();
+		} catch (\Throwable $e) {
 			return $e->getMessage();
 		}
 	}
 
+	public function template( array $props ): void {
+		throw new \Exception( 'Template method not defined' );
+	}
+
 	public function get_props(): array {
 		return array();
+	}
+
+	public function get_assets_folder(): string {
+		return ( new \ReflectionClass( $this ) )->getShortName();
 	}
 
 	/**
@@ -49,9 +65,9 @@ abstract class Page implements Renderable {
 	 */
 	public static function template_is_equal_to( string $template_name ): array {
 		return array(
-			'param'    => 'page_template',
+			'param' => 'page_template',
 			'operator' => '==',
-			'value'    => $template_name . '.php',
+			'value' => $template_name . '.php',
 		);
 	}
 
@@ -63,9 +79,9 @@ abstract class Page implements Renderable {
 	 */
 	public static function is_equal_to( int $page_id ): array {
 		return array(
-			'param'    => 'page',
+			'param' => 'page',
 			'operator' => '==',
-			'value'    => $page_id,
+			'value' => $page_id,
 		);
 	}
 
@@ -78,9 +94,9 @@ abstract class Page implements Renderable {
 	 */
 	public static function type_is_equal_to( string $page_type ): array {
 		return array(
-			'param'    => 'page_type',
+			'param' => 'page_type',
 			'operator' => '==',
-			'value'    => $page_type,
+			'value' => $page_type,
 		);
 	}
 
@@ -92,9 +108,9 @@ abstract class Page implements Renderable {
 	 */
 	public static function parent_is_equal_to( int $parent_id ): array {
 		return array(
-			'param'    => 'page_parent',
+			'param' => 'page_parent',
 			'operator' => '==',
-			'value'    => $parent_id,
+			'value' => $parent_id,
 		);
 	}
 }

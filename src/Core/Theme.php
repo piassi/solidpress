@@ -41,6 +41,18 @@ class Theme {
 	protected static Theme $instance;
 
 	/**
+	 * Current page instance
+	 * @var Page
+	 */
+	protected static Page $current_page;
+
+	/**
+	 * Default layout instance
+	 * @var Page
+	 */
+	protected static string $default_layout;
+
+	/**
 	 * Template engine
 	 *
 	 * @param array $args [
@@ -51,7 +63,7 @@ class Theme {
 	 * ]
 	 */
 
-	public function __construct( array $args ) {
+	public function init( array $args ) {
 		if (
 			! $args['template_engine'] ||
 			! ( $args['template_engine'] instanceof TemplateEngine )
@@ -59,14 +71,12 @@ class Theme {
 			throw new Error( 'Template engine not provided' );
 		}
 
-		$this->template_engine        = $args['template_engine'];
-		$this->namespace              = $args['namespace'];
-		$this->base_folder            = $args['base_folder'];
+		$this->template_engine = $args['template_engine'];
+		$this->namespace = $args['namespace'];
+		$this->base_folder = $args['base_folder'];
 		$this->registrable_namespaces = $args['registrable_namespaces'];
 
 		$this->load_registrable_classes();
-
-		self::$instance = $this;
 	}
 
 	/**
@@ -75,7 +85,35 @@ class Theme {
 	 * @return Theme
 	 */
 	public static function get_instance(): Theme {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new static();
+		}
+
 		return self::$instance;
+	}
+
+	public function set_current_page( Page $page ): void {
+		self::$current_page = $page;
+	}
+
+	public function get_current_page(): Page {
+		if ( self::$current_page === null ) {
+			throw new Error( 'Current page not set.' );
+		}
+
+		return self::$current_page;
+	}
+
+	public function set_default_layout( string $page ): void {
+		self::$default_layout = $page;
+	}
+
+	public function get_default_layout(): string {
+		if ( self::$default_layout === null ) {
+			throw new Error( 'Default layout not set.' );
+		}
+
+		return self::$default_layout;
 	}
 
 	/**
@@ -101,10 +139,10 @@ class Theme {
 				}
 
 				$class_name_array = explode( '.php', $file );
-				$class_name       = array_shift( $class_name_array );
+				$class_name = array_shift( $class_name_array );
 				$class_namespaced =
 					$this->namespace . '\\' . $namespace . '\\' . $class_name;
-				$class_instance   = new $class_namespaced();
+				$class_instance = new $class_namespaced();
 				$class_instance->register();
 			}
 		}
